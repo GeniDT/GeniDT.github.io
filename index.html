@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eugenia Dede Teye, Data Engineer</title>
+<meta name="description" content="Data engineer in Accra, Ghana. PySpark, Spark SQL, lakehouse pipelines, Power BI and AWS. Former clinical dietitian with an interest in health data.">
+<meta property="og:title" content="Eugenia Dede Teye, Data Engineer">
+<meta property="og:description" content="Pipelines and data models that turn messy source data into reporting people can trust.">
+<meta property="og:image" content="https://github.com/GeniDT.png?size=400">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #EDF2F0;
+    --sheet: #F8FBFA;
+    --ink: #172036;
+    --muted: #56656C;
+    --teal: #0E6B63;
+    --amber: #C98A12;
+    --line: #C9D6D2;
+    --display: "Schibsted Grotesk", system-ui, sans-serif;
+    --body: "Source Serif 4", Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 1.125rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--teal); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 2px; }
+  .wrap { width: min(100% - 2.5rem, 68rem); margin-inline: auto; }
+  .measure { max-width: 40rem; }
+
+  h1, h2, h3 { font-family: var(--display); line-height: 1.1; margin: 0; }
+  h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.75rem; }
+  h3 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; }
+
+  /* Header */
+  .top { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 0; font-family: var(--display); font-weight: 500; font-size: 0.95rem; }
+  .top nav { display: flex; gap: 1.5rem; }
+  .top nav a { color: var(--ink); text-decoration: none; }
+  .top nav a:hover { color: var(--teal); }
+  .mark { font-weight: 800; color: var(--ink); text-decoration: none; }
+
+  /* Hero */
+  .hero { display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: end; padding: 4.5rem 0 3rem; }
+  .hero h1 { font-size: clamp(2.8rem, 7vw, 5.4rem); font-weight: 800; letter-spacing: -0.035em; line-height: 0.98; }
+  .hero .lede { font-size: clamp(1.2rem, 2.2vw, 1.45rem); line-height: 1.5; margin: 1.5rem 0 0; max-width: 34rem; }
+  .hero .where { font-family: var(--display); color: var(--muted); font-size: 1rem; margin-top: 1rem; }
+  .portrait { width: 9.5rem; height: 9.5rem; border-radius: 50%; object-fit: cover; border: 4px solid var(--sheet); box-shadow: 0 0 0 1px var(--line); }
+  .links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; font-family: var(--display); font-weight: 500; font-size: 0.98rem; }
+  .btn { display: inline-block; padding: 0.6rem 1.1rem; border: 1.5px solid var(--ink); border-radius: 999px; color: var(--ink); text-decoration: none; }
+  .btn:hover { background: var(--ink); color: var(--sheet); }
+  .btn.primary { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .btn.primary:hover { background: var(--ink); border-color: var(--ink); }
+
+  /* Lineage: the one bold element */
+  .lineage { background: var(--ink); color: var(--paper); padding: 3.25rem 0 3.5rem; margin-top: 1rem; }
+  .lineage p.intro { font-size: 1.05rem; color: #B9C7CE; margin: 0 0 2.25rem; max-width: 40rem; }
+  .flow { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); position: relative; }
+  .flow::before { content: ""; position: absolute; left: 0; right: 0; top: 0.55rem; height: 3px; background: linear-gradient(90deg, var(--amber), #3FB3A4); transform-origin: left; animation: draw 1.4s cubic-bezier(.6,.05,.3,1) .2s both; }
+  .flow li { position: relative; padding: 2.1rem 1.25rem 0 0; }
+  .flow li::before { content: ""; position: absolute; top: 0; left: 0; width: 1.1rem; height: 1.1rem; border-radius: 50%; background: var(--ink); border: 3px solid var(--amber); }
+  .flow li:last-child::before { border-color: #3FB3A4; background: #3FB3A4; }
+  .flow .when { font-family: var(--display); font-weight: 700; color: #F2C66D; font-size: 0.95rem; }
+  .flow li:last-child .when { color: #7FD8CB; }
+  .flow .what { font-family: var(--display); font-weight: 700; font-size: 1.2rem; color: #fff; margin: 0.3rem 0 0.4rem; line-height: 1.2; }
+  .flow .detail { font-size: 0.98rem; color: #B9C7CE; line-height: 1.5; margin: 0; }
+  @keyframes draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  section.block { padding: 4.5rem 0 1rem; }
+
+  /* About */
+  .about p { margin: 0 0 1.1rem; }
+
+  /* Projects */
+  .projects { list-style: none; margin: 0; padding: 0; }
+  .project { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 2.25rem; padding: 2.25rem 0; border-top: 1.5px solid var(--line); align-items: start; }
+  .project:last-child { border-bottom: 1.5px solid var(--line); }
+  .project p { margin: 0.6rem 0 0.9rem; }
+  .stack { font-family: var(--display); font-size: 0.92rem; color: var(--muted); margin: 0; }
+  .project .repo { font-family: var(--display); font-weight: 500; font-size: 0.98rem; }
+  .project figure { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 0.75rem; }
+  .project figure img { display: block; width: 100%; height: auto; max-height: 15rem; object-fit: contain; }
+  .project figcaption { font-family: var(--display); font-size: 0.82rem; color: var(--muted); margin-top: 0.5rem; }
+  .project.text-only { grid-template-columns: minmax(0, 1fr); }
+  .project.text-only > div { max-width: 40rem; }
+  .tag { display: inline-block; font-family: var(--display); font-size: 0.8rem; font-weight: 700; color: var(--teal); background: #DCEDEA; padding: 0.1rem 0.55rem; border-radius: 999px; margin-left: 0.5rem; vertical-align: 0.2em; }
+
+  /* Experience */
+  .jobs { list-style: none; margin: 0; padding: 0; }
+  .job { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 1.5rem; padding: 1.4rem 0; border-top: 1px solid var(--line); }
+  .job .dates { font-family: var(--display); font-size: 0.95rem; color: var(--muted); padding-top: 0.15rem; }
+  .job h3 span { font-weight: 500; color: var(--muted); }
+  .job ul { margin: 0.6rem 0 0; padding-left: 1.1rem; }
+  .job li { margin-bottom: 0.3rem; }
+  .job.earlier p { margin: 0.4rem 0 0; }
+
+  /* Skills */
+  .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 2rem 2.5rem; }
+  .skills h3 { font-size: 1.05rem; margin-bottom: 0.5rem; }
+  .skills p { margin: 0; font-size: 1rem; }
+
+  /* Credentials */
+  .creds { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+  .creds li { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 1.5rem; }
+  .creds .yr { font-family: var(--display); color: var(--muted); font-size: 0.95rem; padding-top: 0.15rem; }
+  .creds strong { font-family: var(--display); font-weight: 700; }
+
+  /* Contact */
+  .contact { margin-top: 4.5rem; padding: 3.5rem 0 4rem; background: var(--sheet); border-top: 1.5px solid var(--line); }
+  .contact p { margin: 0 0 1.5rem; max-width: 36rem; }
+  footer { padding: 2rem 0 3rem; font-family: var(--display); font-size: 0.88rem; color: var(--muted); }
+
+  @media (max-width: 760px) {
+    body { font-size: 1.06rem; }
+    .top nav { display: none; }
+    .hero { grid-template-columns: 1fr; gap: 1.5rem; padding-top: 2rem; }
+    .portrait { order: -1; width: 6.5rem; height: 6.5rem; }
+    .flow { grid-template-columns: 1fr; gap: 1.75rem; padding-left: 2rem; }
+    .flow::before { top: 0; bottom: 0; left: 0.45rem; right: auto; width: 3px; height: auto; background: linear-gradient(180deg, var(--amber), #3FB3A4); transform-origin: top; animation-name: drawv; }
+    .flow li { padding: 0; }
+    .flow li::before { left: -2rem; top: 0.2rem; }
+    .project { grid-template-columns: 1fr; gap: 1.25rem; }
+    .job, .creds li { grid-template-columns: 1fr; gap: 0.25rem; }
+  }
+  @keyframes drawv { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .flow::before { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap top">
+  <a class="mark" href="#">Eugenia Dede Teye</a>
+  <nav aria-label="Sections">
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <div>
+      <h1>Data engineer who knows where the data comes from.</h1>
+      <p class="lede">I build the pipelines and data models that turn messy source data into reporting people can trust, using PySpark, Spark SQL, lakehouse architecture and Power BI.</p>
+      <p class="where">Associate Data Engineer at AmaliTech, based in Accra, Ghana. AWS Certified Data Engineer.</p>
+      <div class="links">
+        <a class="btn primary" href="#projects">See my projects</a>
+        <a class="btn" href="https://www.linkedin.com/in/eugenia-dede-teye/">LinkedIn</a>
+        <a class="btn" href="https://github.com/GeniDT">GitHub</a>
+      </div>
+    </div>
+    <img class="portrait" src="https://github.com/GeniDT.png?size=320" alt="Portrait of Eugenia Dede Teye" width="152" height="152">
+  </section>
+
+  <section class="lineage" aria-labelledby="path-title">
+    <div class="wrap">
+      <h2 id="path-title">From the source to the pipeline</h2>
+      <p class="intro">Before I built pipelines, I was the person entering the data. That shapes how I design them.</p>
+      <ol class="flow">
+        <li>
+          <div class="when">2020 to 2023</div>
+          <p class="what">Clinical dietitian</p>
+          <p class="detail">Collected patient data, documented care in electronic health records and tracked treatment outcomes.</p>
+        </li>
+        <li>
+          <div class="when">2023 to 2024</div>
+          <p class="what">Retrained in data</p>
+          <p class="detail">Self-study and the ALX Data Science programme: Python, SQL, Power BI and statistics.</p>
+        </li>
+        <li>
+          <div class="when">2025</div>
+          <p class="what">Pipelines on AWS</p>
+          <p class="detail">Graduate trainee at AmaliTech. Built batch, streaming and lakehouse pipelines. Earned the AWS Data Engineer certification.</p>
+        </li>
+        <li>
+          <div class="when">Now</div>
+          <p class="what">Lakehouse and BI</p>
+          <p class="detail">Associate Data Engineer working on data platforms end to end, from ingestion to Power BI reporting.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="wrap block about" aria-labelledby="about-title">
+    <h2 id="about-title">About</h2>
+    <div class="measure">
+      <p>I work on data platforms end to end, from ingestion to reporting. I build layered lakehouse transformations with PySpark and Spark SQL, design semantic models for Power BI, and tune dashboards so they stay fast as data grows.</p>
+      <p>I also care about the less visible work: data quality checks, documentation, and pipelines the next person can maintain easily.</p>
+      <p>My years as a clinical dietitian taught me how data is created at the source and how to work closely with the people who rely on it. It's also why I have a particular interest in health data.</p>
+    </div>
+  </section>
+
+  <section class="wrap block" id="projects" aria-labelledby="projects-title">
+    <h2 id="projects-title">Projects</h2>
+    <ul class="projects">
+      <li class="project">
+        <div>
+          <h3>E-Commerce Lakehouse on AWS</h3>
+          <p>Serverless lakehouse that ingests e-commerce transaction files, validates and transforms them with Spark on AWS Glue, and stores them as Delta Lake tables for querying in Athena. Step Functions orchestrates the workflow end to end.</p>
+          <p class="stack">Glue (Spark), Delta Lake, Step Functions, Lambda, Athena, GitHub Actions</p>
+          <p><a class="repo" href="https://github.com/GeniDT/lakehouse-ecommerce-etl-pipeline">View the code on GitHub</a></p>
+        </div>
+        <figure>
+          <img src="https://raw.githubusercontent.com/GeniDT/lakehouse-ecommerce-etl-pipeline/main/architecture/ecommerce_lakehouse_architecture.png" alt="Architecture diagram of the e-commerce lakehouse pipeline" loading="lazy">
+          <figcaption>Architecture</figcaption>
+        </figure>
+      </li>
+      <li class="project">
+        <div>
+          <h3>Real-Time Trip Analytics Pipeline</h3>
+          <p>Event-driven pipeline for a ride-hailing scenario. Kinesis streams trip events, Lambda validates and deduplicates them into DynamoDB, and a scheduled EventBridge job writes daily KPIs to S3, with SNS alerts and CI/CD.</p>
+          <p class="stack">Kinesis, Lambda, DynamoDB, EventBridge, S3, GitHub Actions</p>
+          <p><a class="repo" href="https://github.com/GeniDT/real-time-trip-analytics-pipeline">View the code on GitHub</a></p>
+        </div>
+        <figure>
+          <img src="https://raw.githubusercontent.com/GeniDT/real-time-trip-analytics-pipeline/main/architecture/nsp-bolt-ride-architecture.png" alt="Architecture diagram of the real-time trip analytics pipeline" loading="lazy">
+          <figcaption>Architecture</figcaption>
+        </figure>
+      </li>
+      <li class="project">
+        <div>
+          <h3>Car Rental Data Pipeline on Amazon EMR</h3>
+          <p>Batch pipeline that processes car rental data with PySpark on EMR to produce vehicle, location and customer KPIs, catalogued in Glue and queried with Athena. Step Functions orchestrates the full run.</p>
+          <p class="stack">PySpark, EMR, Glue Data Catalog, Athena, Step Functions</p>
+          <p><a class="repo" href="https://github.com/GeniDT/emr-big-data-pipeline">View the code on GitHub</a></p>
+        </div>
+        <figure>
+          <img src="https://raw.githubusercontent.com/GeniDT/emr-big-data-pipeline/main/architecture/emr_big_data_architecture.png" alt="Architecture diagram of the car rental pipeline on EMR" loading="lazy">
+          <figcaption>Architecture</figcaption>
+        </figure>
+      </li>
+      <li class="project">
+        <div>
+          <h3>Music Streaming KPI Pipeline with Airflow</h3>
+          <p>Daily pipeline orchestrated by Apache Airflow. Glue crawlers and Spark jobs validate raw stream data in S3, compute KPIs such as top songs and genres, and load them into DynamoDB for dashboards.</p>
+          <p class="stack">Apache Airflow, Glue (Spark), S3, DynamoDB</p>
+          <p><a class="repo" href="https://github.com/GeniDT/airflow-glue-streaming-pipeline">View the code on GitHub</a></p>
+        </div>
+        <figure>
+          <img src="https://raw.githubusercontent.com/GeniDT/airflow-glue-streaming-pipeline/main/architecture/streaming_etl_with_glue_and_MWAA.PNG" alt="Architecture diagram of the Airflow and Glue music pipeline" loading="lazy">
+          <figcaption>Architecture</figcaption>
+        </figure>
+      </li>
+      <li class="project">
+        <div>
+          <h3>Sales Performance Dashboard</h3>
+          <p>Power BI dashboard comparing year-to-date with prior-year sales, product performance and gross profit by country. Data cleaned in Power Query, with DAX measures for the KPIs.</p>
+          <p class="stack">Power BI, DAX, Power Query</p>
+          <p><a class="repo" href="https://github.com/GeniDT/GreenLeaf-Performance-Dashboard">View the project on GitHub</a></p>
+        </div>
+        <figure>
+          <img src="https://raw.githubusercontent.com/GeniDT/GreenLeaf-Performance-Dashboard/main/images/Image.png" alt="Screenshot of the GreenLeaf sales performance dashboard" loading="lazy">
+          <figcaption>Dashboard</figcaption>
+        </figure>
+      </li>
+      <li class="project text-only">
+        <div>
+          <h3>Healthcare Data Cleaning in Python <span class="tag">Health data</span></h3>
+          <p>Cleaned a messy healthcare dataset of patient visits, medications and lab readings with pandas: handled missing values, standardized dates, mapped medications to conditions and fixed non-numeric lab values.</p>
+          <p class="stack">Python, pandas</p>
+          <p><a class="repo" href="https://github.com/GeniDT/healthcare-data-cleaning">View the code on GitHub</a></p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="wrap block" id="experience" aria-labelledby="exp-title">
+    <h2 id="exp-title">Experience</h2>
+    <ul class="jobs">
+      <li class="job">
+        <div class="dates">Oct 2025 to now</div>
+        <div>
+          <h3>Associate Data Engineer <span>at AmaliTech</span></h3>
+          <ul>
+            <li>Build and maintain layered lakehouse pipelines using PySpark and Spark SQL on a cloud data platform</li>
+            <li>Design semantic models and measures for Power BI and Qlik Sense dashboards used in business reporting</li>
+            <li>Improve dashboard performance by restructuring data models and moving heavy calculations into the data layer</li>
+            <li>Add data validation checks and documentation so pipelines are reliable and easy to hand over</li>
+          </ul>
+        </div>
+      </li>
+      <li class="job">
+        <div class="dates">Apr to Oct 2025</div>
+        <div>
+          <h3>Data Engineer Graduate Trainee <span>at AmaliTech</span></h3>
+          <ul>
+            <li>Built end-to-end data workflows with SQL, Python and Excel across multiple source systems</li>
+            <li>Built ETL processes supporting dashboards across several business functions</li>
+            <li>Built the AWS pipelines shown in the projects above</li>
+          </ul>
+        </div>
+      </li>
+      <li class="job">
+        <div class="dates">Jan to Mar 2025</div>
+        <div>
+          <h3>Data Analyst Associate <span>at Excelerate</span></h3>
+          <ul>
+            <li>Cleaned and validated a 50K+ record dataset using Python and Excel, adding automated quality checks</li>
+            <li>Built a KPI dashboard in Looker Studio and analyzed user conversion patterns</li>
+          </ul>
+        </div>
+      </li>
+      <li class="job earlier">
+        <div class="dates">2020 to 2023</div>
+        <div>
+          <h3>Clinical Dietitian <span>at Darkwa Memorial Clinic and Police Hospital</span></h3>
+          <p>Assessed patients using anthropometric, clinical and dietary data, documented care in electronic health records, and monitored treatment outcomes.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="wrap block" id="skills" aria-labelledby="skills-title">
+    <h2 id="skills-title">Skills</h2>
+    <div class="skills">
+      <div><h3>Data engineering</h3><p>Python, PySpark, Spark SQL, SQL and T-SQL, ETL/ELT, data quality</p></div>
+      <div><h3>Lakehouse and modeling</h3><p>Microsoft Fabric, Delta Lake, medallion architecture, dimensional modeling</p></div>
+      <div><h3>BI</h3><p>Power BI (DAX, Power Query), Qlik Sense</p></div>
+      <div><h3>Cloud</h3><p>AWS: S3, Glue, Athena, Redshift, EMR, Lambda, Step Functions, Kinesis, DynamoDB</p></div>
+      <div><h3>Orchestration and DevOps</h3><p>Apache Airflow, Docker, Git, GitHub Actions</p></div>
+    </div>
+  </section>
+
+  <section class="wrap block" aria-labelledby="creds-title">
+    <h2 id="creds-title">Certifications and education</h2>
+    <ul class="creds">
+      <li><span class="yr">2025</span><span><strong>AWS Certified Data Engineer, Associate</strong><br>Amazon Web Services</span></li>
+      <li><span class="yr">2025</span><span><strong>Python for Data Science, AI and Development</strong><br>IBM</span></li>
+      <li><span class="yr">2024</span><span><strong>Data Science Professional Certificate</strong><br>ALX</span></li>
+      <li><span class="yr">2016 to 2020</span><span><strong>Bachelor of Dietetics</strong><br>University of Health and Allied Sciences</span></li>
+    </ul>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <h2 id="contact-title">Let's talk</h2>
+      <p>I'm open to data engineering, analytics engineering, BI and health data roles: remote, in Ghana, or in Europe.</p>
+      <div class="links">
+        <a class="btn primary" href="mailto:t.eugeniadede@gmail.com">Email me</a>
+        <a class="btn" href="https://www.linkedin.com/in/eugenia-dede-teye/">LinkedIn</a>
+        <a class="btn" href="https://github.com/GeniDT">GitHub</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">Eugenia Dede Teye, Accra, Ghana</footer>
+
+</body>
+</html>
